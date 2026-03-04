@@ -248,6 +248,8 @@ nav {
 
 .tool-panel { display: none; }
 .tool-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+.tool-panel.active.single { display: block; }
+@media(max-width:900px){ .tool-panel.active { grid-template-columns: 1fr !important; } }
 
 /* ── FORM ELEMENTS ── */
 .form-card {
@@ -735,7 +737,7 @@ nav {
       </div>
 
       <!-- ── RESUME TOOL ── -->
-      <div id="tool-resume" class="tool-panel">
+      <div id="tool-resume" class="tool-panel" style="display:none;">
         <div class="form-card">
           <div class="inner-tabs-row">
             <button class="itab active" onclick="switchResume('optimizer')">Optimizer</button>
@@ -791,7 +793,7 @@ nav {
       </div>
 
       <!-- ── INTERVIEW TOOL ── -->
-      <div id="tool-interview" class="tool-panel">
+      <div id="tool-interview" class="tool-panel" style="display:none;">
         <div class="form-card" style="display:flex;flex-direction:column;gap:0;">
           <div class="inner-tabs-row">
             <button class="itab active" onclick="switchInt('sql')">SQL</button>
@@ -1033,13 +1035,22 @@ function mobTab(el) {
 
 // ── TOOL SWITCHER ─────────────────────────
 function switchTool(t) {
+  // Hide all panels
   ['roadmap','resume','interview'].forEach(n => {
-    document.getElementById('tool-'+n).classList.toggle('active', n===t);
+    document.getElementById('tool-'+n).style.display = 'none';
+    document.getElementById('tool-'+n).classList.remove('active');
   });
-  document.querySelectorAll('.tool-tab').forEach((el,i) => {
-    el.classList.toggle('active', ['roadmap','resume','interview'][i]===t);
+
+  // Show selected panel
+  const el = document.getElementById('tool-'+t);
+  el.style.display = 'grid';
+  el.classList.add('active');
+
+  // Highlight active tab
+  document.querySelectorAll('.tool-tab').forEach((tab, i) => {
+    tab.classList.toggle('active', ['roadmap','resume','interview'][i] === t);
   });
-  // Reset mock chat when switching away from interview
+
   if (t !== 'interview') resetMockUI();
 }
 
@@ -1125,8 +1136,7 @@ async function aiDirect(prompt, sys) {
   if (sys) body.system = sys;
   const r = await fetch('https://api.anthropic.com/v1/messages', {
     method:'POST',
-    headers:{'Content-Type':'application/json', 'x-api-key':'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
-', 'anthropic-version':'2023-06-01'},
+    headers:{'Content-Type':'application/json'},
     body:JSON.stringify(body)
   });
   const d = await r.json();
