@@ -5,607 +5,845 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DataPath AI — Get Hired as a Data Analyst</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
+*{margin:0;padding:0;box-sizing:border-box;}
 
-:root {
-  --ink: #0d0d0d;
-  --ink2: #1a1a1a;
-  --ink3: #2a2a2a;
-  --fog: #f5f4f0;
-  --fog2: #eeede8;
-  --fog3: #e5e4de;
-  --accent: #ff4d1c;
-  --accent2: #0047ff;
-  --gold: #c8a84b;
-  --white: #fafaf8;
-  --border: rgba(13,13,13,0.12);
-  --border2: rgba(13,13,13,0.08);
+:root{
+  --bg:       #080612;
+  --bg2:      #0e0a1f;
+  --bg3:      #130d2a;
+  --purple:   #7c3aed;
+  --purple2:  #9d5ff5;
+  --purple3:  #c084fc;
+  --silver:   #e2e8f0;
+  --silver2:  #94a3b8;
+  --silver3:  #cbd5e1;
+  --cyan:     #22d3ee;
+  --pink:     #f472b6;
+  --gold:     #fbbf24;
+  --white:    #f8fafc;
+  --border:   rgba(124,58,237,0.2);
+  --border2:  rgba(124,58,237,0.08);
+  --glow:     rgba(124,58,237,0.4);
 }
 
-html { scroll-behavior: smooth; }
+html{scroll-behavior:smooth;}
 
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--white);
-  color: var(--ink);
-  overflow-x: hidden;
+body{
+  font-family:'Rajdhani',sans-serif;
+  background:var(--bg);
+  color:var(--silver);
+  overflow-x:hidden;
+  cursor:none;
 }
 
-/* ── GRAIN OVERLAY ── */
-body::before {
-  content: '';
-  position: fixed; inset: 0; z-index: 999;
-  pointer-events: none;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 200px;
+/* CUSTOM CURSOR */
+.cursor{
+  width:8px;height:8px;
+  background:var(--purple3);
+  border-radius:50%;
+  position:fixed;z-index:9999;
+  pointer-events:none;
+  transition:transform 0.1s;
+  box-shadow:0 0 12px var(--purple3);
+}
+.cursor-ring{
+  width:32px;height:32px;
+  border:1px solid rgba(192,132,252,0.4);
+  border-radius:50%;
+  position:fixed;z-index:9998;
+  pointer-events:none;
+  transition:all 0.15s ease;
 }
 
-/* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 48px;
-  background: rgba(250,250,248,0.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
+/* SCANLINE OVERLAY */
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:998;
+  pointer-events:none;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(124,58,237,0.015) 2px,
+    rgba(124,58,237,0.015) 4px
+  );
 }
 
-.nav-logo {
-  font-family: 'Syne', sans-serif;
-  font-size: 17px; font-weight: 800;
-  letter-spacing: -0.3px;
-  display: flex; align-items: center; gap: 10px;
+/* GRID BG */
+body::after{
+  content:'';
+  position:fixed;inset:0;z-index:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
 }
 
-.nav-logo-mark {
-  width: 28px; height: 28px; background: var(--ink);
-  border-radius: 7px; display: flex; align-items: center;
-  justify-content: center; font-size: 14px; color: var(--white);
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 48px;
+  background:rgba(8,6,18,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
 }
 
-.nav-links {
-  display: flex; align-items: center; gap: 6px;
-  background: var(--fog2); border-radius: 10px; padding: 5px;
-  border: 1px solid var(--border);
+nav::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),var(--purple),transparent);
 }
 
-.nav-link {
-  padding: 7px 16px; border-radius: 7px; cursor: pointer;
-  font-size: 13px; font-weight: 500; color: #666;
-  transition: all 0.18s; border: none; background: none;
-  font-family: 'DM Sans', sans-serif;
-}
-.nav-link.active { background: var(--ink); color: var(--white); }
-.nav-link:hover:not(.active) { color: var(--ink); background: var(--fog3); }
-
-.nav-badge {
-  font-size: 10px; font-weight: 700; background: var(--accent);
-  color: white; padding: 2px 6px; border-radius: 4px; margin-left: 4px;
+.nav-logo{
+  font-family:'Orbitron',sans-serif;
+  font-size:15px;font-weight:800;
+  letter-spacing:2px;text-transform:uppercase;
+  display:flex;align-items:center;gap:10px;
+  color:var(--white);
 }
 
-/* ── HERO ── */
-.hero {
-  min-height: 100vh; display: flex; align-items: center;
-  padding: 120px 48px 80px;
-  position: relative; overflow: hidden;
+.nav-logo-mark{
+  width:32px;height:32px;
+  background:linear-gradient(135deg,var(--purple),var(--purple3));
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;
+  box-shadow:0 0 16px var(--glow);
 }
 
-.hero-bg {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 70% 50%, rgba(200,168,75,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 60% at 20% 80%, rgba(255,77,28,0.05) 0%, transparent 50%);
+.nav-links{
+  display:flex;align-items:center;gap:2px;
+  background:rgba(124,58,237,0.08);
+  border:1px solid var(--border);
+  border-radius:10px;padding:4px;
 }
 
-.hero-grid {
-  position: absolute; inset: 0; opacity: 0.03;
-  background-image: linear-gradient(var(--ink) 1px, transparent 1px),
-                    linear-gradient(90deg, var(--ink) 1px, transparent 1px);
-  background-size: 60px 60px;
+.nav-link{
+  padding:8px 20px;border-radius:7px;cursor:none;
+  font-family:'Rajdhani',sans-serif;
+  font-size:13px;font-weight:600;
+  letter-spacing:1px;text-transform:uppercase;
+  color:var(--silver2);transition:all 0.2s;
+  border:none;background:none;
+}
+.nav-link.active{
+  background:linear-gradient(135deg,var(--purple),var(--purple2));
+  color:white;
+  box-shadow:0 0 20px rgba(124,58,237,0.5);
+}
+.nav-link:hover:not(.active){color:var(--purple3);}
+
+.nav-badge{
+  font-size:9px;font-weight:700;
+  background:var(--cyan);color:var(--bg);
+  padding:2px 6px;border-radius:4px;
+  margin-left:4px;letter-spacing:1px;
 }
 
-.hero-content { position: relative; max-width: 1100px; margin: 0 auto; width: 100%; }
-
-.hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 11px; font-weight: 500; letter-spacing: 2px;
-  text-transform: uppercase; color: var(--accent);
-  margin-bottom: 28px;
-  border: 1px solid rgba(255,77,28,0.25);
-  padding: 6px 14px; border-radius: 99px;
-  background: rgba(255,77,28,0.04);
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 24px;border-radius:8px;
+  font-family:'Rajdhani',sans-serif;
+  font-size:13px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  cursor:none;transition:all 0.2s;border:none;
 }
 
-.hero-eyebrow::before {
-  content: ''; width: 6px; height: 6px; border-radius: 50%;
-  background: var(--accent); flex-shrink: 0;
-  box-shadow: 0 0 8px var(--accent);
-  animation: blink 2s infinite;
+.btn-primary{
+  background:linear-gradient(135deg,var(--purple),var(--purple2));
+  color:white;
+  box-shadow:0 0 24px rgba(124,58,237,0.4);
+  position:relative;overflow:hidden;
 }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-.hero h1 {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(48px, 7vw, 88px);
-  font-weight: 800; line-height: 0.95;
-  letter-spacing: -3px; margin-bottom: 32px;
+.btn-primary::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--purple2),var(--purple3));
+  opacity:0;transition:opacity 0.2s;
 }
+.btn-primary:hover::before{opacity:1;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(124,58,237,0.6);}
 
-.hero h1 em {
-  font-style: normal;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--gold) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+.btn-outline{
+  background:transparent;color:var(--purple3);
+  border:1px solid var(--border);
 }
+.btn-outline:hover{border-color:var(--purple3);background:rgba(124,58,237,0.1);box-shadow:0 0 20px rgba(124,58,237,0.2);}
 
-.hero-sub {
-  font-size: 17px; color: #555; line-height: 1.7;
-  max-width: 500px; margin-bottom: 48px; font-weight: 400;
+.btn-cyan{
+  background:linear-gradient(135deg,#0891b2,var(--cyan));
+  color:var(--bg);font-weight:800;
+  box-shadow:0 0 24px rgba(34,211,238,0.3);
 }
+.btn-cyan:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(34,211,238,0.5);}
 
-.hero-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-
-.btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 14px 28px; border-radius: 10px;
-  font-size: 14px; font-weight: 500; cursor: pointer;
-  transition: all 0.18s; border: none;
-  font-family: 'DM Sans', sans-serif;
-  text-decoration: none;
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding:120px 48px 80px;
+  position:relative;overflow:hidden;
 }
 
-.btn-dark {
-  background: var(--ink); color: var(--white);
-  box-shadow: 0 4px 20px rgba(13,13,13,0.25);
+.hero-orb1{
+  position:absolute;
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(124,58,237,0.15) 0%,transparent 70%);
+  top:-100px;right:-100px;
+  animation:float1 8s ease-in-out infinite;
 }
-.btn-dark:hover { background: var(--ink3); transform: translateY(-1px); box-shadow: 0 8px 28px rgba(13,13,13,0.3); }
-
-.btn-ghost {
-  background: transparent; color: var(--ink);
-  border: 1px solid var(--border2);
+.hero-orb2{
+  position:absolute;
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(34,211,238,0.08) 0%,transparent 70%);
+  bottom:0;left:-50px;
+  animation:float2 10s ease-in-out infinite;
 }
-.btn-ghost:hover { background: var(--fog2); border-color: var(--border); }
+@keyframes float1{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,30px);}}
+@keyframes float2{0%,100%{transform:translate(0,0);}50%{transform:translate(20px,-20px);}}
 
-.btn-accent {
-  background: var(--accent); color: white;
-  box-shadow: 0 4px 20px rgba(255,77,28,0.3);
+.hero-content{position:relative;z-index:1;max-width:700px;}
+
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;font-weight:400;
+  color:var(--cyan);letter-spacing:2px;
+  border:1px solid rgba(34,211,238,0.25);
+  padding:6px 14px;border-radius:4px;
+  background:rgba(34,211,238,0.05);
+  margin-bottom:32px;
 }
-.btn-accent:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(255,77,28,0.4); }
-
-.hero-stats {
-  position: absolute; right: 0; top: 50%; transform: translateY(-50%);
-  display: flex; flex-direction: column; gap: 12px;
+.hero-tag::before{
+  content:'';width:6px;height:6px;
+  background:var(--cyan);border-radius:50%;
+  box-shadow:0 0 8px var(--cyan);
+  animation:blink 1.5s infinite;
 }
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
 
-.stat-card {
-  background: var(--white); border: 1px solid var(--border);
-  border-radius: 14px; padding: 20px 24px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-  min-width: 160px;
-}
-.stat-card:nth-child(2) { transform: translateX(20px); }
-
-.stat-val {
-  font-family: 'Syne', sans-serif;
-  font-size: 32px; font-weight: 800; line-height: 1;
-  color: var(--ink); margin-bottom: 4px;
-}
-.stat-val span { color: var(--accent); }
-.stat-desc { font-size: 12px; color: #888; font-weight: 400; }
-
-/* ── SECTION COMMON ── */
-.section { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
-
-.section-label {
-  font-size: 11px; font-weight: 600; letter-spacing: 2.5px;
-  text-transform: uppercase; color: var(--accent);
-  margin-bottom: 16px;
+.hero h1{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(36px,6vw,72px);
+  font-weight:900;line-height:1.0;
+  letter-spacing:-1px;
+  margin-bottom:24px;
+  color:var(--white);
 }
 
-.section-title {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(28px, 4vw, 46px);
-  font-weight: 800; letter-spacing: -1.5px;
-  line-height: 1.05; margin-bottom: 16px;
+.hero h1 .line2{
+  background:linear-gradient(135deg,var(--purple3) 0%,var(--cyan) 50%,var(--pink) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  filter:drop-shadow(0 0 20px rgba(124,58,237,0.5));
 }
 
-.section-sub {
-  font-size: 16px; color: #666; max-width: 480px; line-height: 1.7;
+.hero-sub{
+  font-size:17px;color:var(--silver2);
+  line-height:1.7;max-width:480px;
+  margin-bottom:40px;font-weight:400;
 }
 
-/* ── TOOL SECTION ── */
-.tools-wrapper {
-  background: var(--fog);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+.hero-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:60px;}
+
+.hero-stats{
+  display:flex;gap:32px;flex-wrap:wrap;
+}
+.stat{
+  display:flex;flex-direction:column;gap:4px;
+}
+.stat-num{
+  font-family:'Orbitron',sans-serif;
+  font-size:28px;font-weight:800;
+  color:var(--white);
+}
+.stat-num span{color:var(--purple3);}
+.stat-label{font-size:12px;color:var(--silver2);letter-spacing:1px;text-transform:uppercase;}
+
+.hero-visual{
+  position:absolute;right:48px;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:12px;
 }
 
-.tools-inner { max-width: 1200px; margin: 0 auto; padding: 80px 48px; }
+.holo-card{
+  background:linear-gradient(135deg,rgba(124,58,237,0.1),rgba(34,211,238,0.05));
+  border:1px solid var(--border);
+  border-radius:12px;padding:20px 24px;
+  min-width:180px;
+  backdrop-filter:blur(10px);
+  position:relative;overflow:hidden;
+}
+.holo-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--purple3),transparent);
+}
+.holo-card:nth-child(2){transform:translateX(24px);}
+.holo-card:nth-child(3){transform:translateX(12px);}
 
-.tool-tabs {
-  display: flex; gap: 0;
-  border: 1px solid var(--border);
-  border-radius: 12px; overflow: hidden;
-  background: var(--white);
-  margin-bottom: 40px;
-  width: fit-content;
+.holo-val{
+  font-family:'Orbitron',sans-serif;
+  font-size:28px;font-weight:800;color:var(--white);
+  margin-bottom:4px;
+}
+.holo-val.purple{color:var(--purple3);}
+.holo-val.cyan{color:var(--cyan);}
+.holo-desc{font-size:11px;color:var(--silver2);letter-spacing:1px;text-transform:uppercase;}
+
+/* TOOLS */
+.tools-section{
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  position:relative;
 }
 
-.tool-tab {
-  padding: 14px 28px; cursor: pointer;
-  font-size: 13px; font-weight: 500;
-  color: #888; transition: all 0.18s;
-  border: none; background: none;
-  font-family: 'DM Sans', sans-serif;
-  border-right: 1px solid var(--border);
-  display: flex; align-items: center; gap: 8px;
-}
-.tool-tab:last-child { border-right: none; }
-.tool-tab.active { background: var(--ink); color: var(--white); }
-.tool-tab:hover:not(.active) { background: var(--fog2); color: var(--ink); }
+.tools-inner{max-width:1200px;margin:0 auto;padding:80px 48px;}
 
-.tool-panel { display: none; }
-.tool-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
-.tool-panel.active.single { display: block; }
-@media(max-width:900px){ .tool-panel.active { grid-template-columns: 1fr !important; } }
-
-/* ── FORM ELEMENTS ── */
-.form-card {
-  background: var(--white); border: 1px solid var(--border);
-  border-radius: 16px; padding: 32px;
+.section-eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:var(--purple3);
+  letter-spacing:3px;text-transform:uppercase;
+  margin-bottom:12px;
 }
 
-.field { margin-bottom: 20px; }
-.field label {
-  display: block; font-size: 11px; font-weight: 600;
-  letter-spacing: 1px; text-transform: uppercase;
-  color: #999; margin-bottom: 8px;
+.section-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(24px,3.5vw,40px);
+  font-weight:800;color:var(--white);
+  letter-spacing:-0.5px;line-height:1.1;
+  margin-bottom:48px;
 }
 
-.field input, .field select, .field textarea {
-  width: 100%; padding: 11px 14px;
-  background: var(--fog); border: 1px solid var(--border);
-  border-radius: 9px; color: var(--ink);
-  font-size: 14px; font-family: 'DM Sans', sans-serif;
-  transition: all 0.18s; outline: none;
+/* TOOL TABS */
+.tool-tabs{
+  display:flex;gap:0;
+  border:1px solid var(--border);
+  border-radius:10px;overflow:hidden;
+  background:rgba(124,58,237,0.05);
+  margin-bottom:40px;width:fit-content;
 }
-.field input:focus, .field select:focus, .field textarea:focus {
-  border-color: var(--ink); background: var(--white);
-  box-shadow: 0 0 0 3px rgba(13,13,13,0.06);
+
+.tool-tab{
+  padding:14px 28px;cursor:none;
+  font-family:'Rajdhani',sans-serif;
+  font-size:13px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--silver2);transition:all 0.2s;
+  border:none;background:none;
+  border-right:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
 }
-.field textarea { resize: vertical; min-height: 110px; }
-.field select option { background: var(--white); }
+.tool-tab:last-child{border-right:none;}
+.tool-tab.active{
+  background:linear-gradient(135deg,var(--purple),var(--purple2));
+  color:white;
+  box-shadow:inset 0 0 20px rgba(255,255,255,0.1);
+}
+.tool-tab:hover:not(.active){color:var(--purple3);background:rgba(124,58,237,0.1);}
+
+.tool-panel{display:none;}
+.tool-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;}
+
+/* FORM CARD */
+.form-card{
+  background:rgba(13,10,31,0.8);
+  border:1px solid var(--border);
+  border-radius:14px;padding:28px;
+  backdrop-filter:blur(10px);
+  position:relative;overflow:hidden;
+}
+.form-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--purple),transparent);
+}
+
+.field{margin-bottom:18px;}
+.field label{
+  display:block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:500;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--purple3);margin-bottom:8px;
+}
+
+.field input,.field select,.field textarea{
+  width:100%;padding:11px 14px;
+  background:rgba(124,58,237,0.06);
+  border:1px solid var(--border);
+  border-radius:8px;color:var(--silver);
+  font-size:14px;font-family:'Rajdhani',sans-serif;
+  font-weight:500;
+  transition:all 0.2s;outline:none;
+  cursor:none;
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:var(--purple);
+  background:rgba(124,58,237,0.1);
+  box-shadow:0 0 0 3px rgba(124,58,237,0.15),0 0 20px rgba(124,58,237,0.1);
+}
+.field textarea{resize:vertical;min-height:110px;}
+.field select option{background:var(--bg2);color:var(--silver);}
 
 /* CHIPS */
-.chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
-.chip {
-  padding: 5px 12px; border-radius: 6px; cursor: pointer;
-  font-size: 12px; font-weight: 500; transition: all 0.15s;
-  background: var(--fog2); border: 1px solid var(--border);
-  color: #777; font-family: 'DM Sans', sans-serif;
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
+.chip{
+  padding:5px 12px;border-radius:5px;cursor:none;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;font-weight:500;
+  letter-spacing:0.5px;
+  transition:all 0.15s;
+  background:rgba(124,58,237,0.08);
+  border:1px solid var(--border);
+  color:var(--silver2);
 }
-.chip.on { background: var(--ink); color: var(--white); border-color: var(--ink); }
-.chip:hover:not(.on) { border-color: var(--ink); color: var(--ink); }
+.chip.on{
+  background:linear-gradient(135deg,var(--purple),var(--purple2));
+  color:white;border-color:var(--purple);
+  box-shadow:0 0 12px rgba(124,58,237,0.4);
+}
+.chip:hover:not(.on){border-color:var(--purple3);color:var(--purple3);}
 
 /* OUTPUT CARD */
-.output-card {
-  background: var(--ink); color: var(--white);
-  border-radius: 16px; padding: 32px;
-  position: relative; overflow: hidden; min-height: 200px;
-  display: flex; flex-direction: column;
+.output-card{
+  background:rgba(8,6,18,0.95);
+  border:1px solid var(--border);
+  border-radius:14px;padding:28px;
+  position:relative;overflow:hidden;
+  min-height:240px;
+  display:flex;flex-direction:column;
+  backdrop-filter:blur(10px);
+}
+.output-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--purple),var(--cyan),var(--pink),var(--purple));
+  background-size:200% 100%;
+  animation:shimmer 3s linear infinite;
+}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+
+.output-status{
+  display:flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:500;
+  letter-spacing:2px;text-transform:uppercase;
+  color:rgba(124,58,237,0.6);
+  margin-bottom:20px;
+}
+.output-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 8px var(--cyan);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.output-empty{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;gap:12px;padding:40px 20px;
+}
+.output-empty-icon{font-size:40px;opacity:0.2;filter:grayscale(100%);}
+.output-empty-text{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;color:rgba(148,163,184,0.4);
+  line-height:1.8;letter-spacing:0.5px;
 }
 
-.output-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent2));
+.output-text{
+  font-family:'Rajdhani',sans-serif;
+  font-size:14px;line-height:1.8;
+  color:var(--silver3);
+  white-space:pre-wrap;flex:1;display:none;
+}
+.output-text.show{display:block;}
+
+.output-footer{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:20px;padding-top:16px;
+  border-top:1px solid rgba(124,58,237,0.12);
+}
+.output-copy{
+  padding:7px 16px;border-radius:6px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:500;
+  letter-spacing:1px;cursor:none;
+  border:1px solid var(--border);
+  background:rgba(124,58,237,0.08);
+  color:var(--purple3);
+  transition:all 0.2s;
+}
+.output-copy:hover{background:rgba(124,58,237,0.2);box-shadow:0 0 12px rgba(124,58,237,0.3);}
+
+/* LOADER */
+.loader{display:none;height:2px;background:rgba(124,58,237,0.1);border-radius:99px;overflow:hidden;margin:12px 0;}
+.loader.on{display:block;}
+.loader-bar{
+  height:100%;
+  background:linear-gradient(90deg,var(--purple),var(--cyan),var(--pink));
+  border-radius:99px;
+  animation:slide 1.8s ease-in-out infinite;
+}
+@keyframes slide{0%{width:0%;margin-left:0%;}50%{width:60%;margin-left:20%;}100%{width:0%;margin-left:100%;}}
+
+/* INNER TABS */
+.inner-tabs-row{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;}
+.itab{
+  padding:6px 14px;border-radius:6px;cursor:none;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:500;
+  letter-spacing:1px;text-transform:uppercase;
+  color:var(--silver2);
+  border:1px solid var(--border);background:none;
+  transition:all 0.2s;
+}
+.itab.active{
+  background:linear-gradient(135deg,var(--purple),var(--purple2));
+  color:white;border-color:var(--purple);
+  box-shadow:0 0 12px rgba(124,58,237,0.3);
+}
+.itab:hover:not(.active){color:var(--purple3);border-color:var(--purple3);}
+
+.ipanel{display:none;}
+.ipanel.active{display:block;}
+
+/* Q BOX */
+.q-box{
+  background:rgba(124,58,237,0.06);
+  border:1px solid var(--border);
+  border-radius:10px;padding:20px;
+  margin-bottom:16px;
+  position:relative;overflow:hidden;
+}
+.q-box::before{
+  content:'';position:absolute;
+  left:0;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--purple),var(--cyan));
+}
+.q-tag{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:500;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:10px;
+  border:1px solid rgba(34,211,238,0.2);
+  padding:3px 9px;border-radius:3px;
+  background:rgba(34,211,238,0.05);
+}
+.q-text{font-size:14px;font-weight:500;line-height:1.6;color:var(--silver);}
+.q-code{
+  background:rgba(124,58,237,0.15);
+  padding:2px 7px;border-radius:4px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;color:var(--purple3);
+  border:1px solid var(--border);
 }
 
-.output-status {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
-  text-transform: uppercase; color: rgba(255,255,255,0.4);
-  margin-bottom: 20px;
+/* SCORE */
+.score-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.score-card{
+  background:rgba(124,58,237,0.06);
+  border:1px solid var(--border);
+  border-radius:10px;padding:14px;text-align:center;
 }
-.output-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: #3dffa0;
-  box-shadow: 0 0 8px #3dffa0;
-  animation: pulse 2s infinite;
+.score-num{
+  font-family:'Orbitron',sans-serif;
+  font-size:24px;font-weight:800;color:var(--white);
 }
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-
-.output-empty {
-  flex: 1; display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center; gap: 12px; padding: 40px 20px;
-}
-.output-empty-icon { font-size: 36px; opacity: 0.3; }
-.output-empty-text { font-size: 14px; color: rgba(255,255,255,0.3); line-height: 1.6; }
-
-.output-text {
-  font-size: 13.5px; line-height: 1.8;
-  color: rgba(255,255,255,0.85);
-  white-space: pre-wrap; flex: 1;
-  display: none;
-}
-.output-text.show { display: block; }
-
-.output-footer {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-top: 20px; padding-top: 16px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-}
-.output-copy {
-  padding: 7px 16px; border-radius: 7px; font-size: 12px;
-  font-weight: 500; cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6);
-  transition: all 0.18s; font-family: 'DM Sans', sans-serif;
-}
-.output-copy:hover { background: rgba(255,255,255,0.1); color: white; }
-
-/* LOADING */
-.loader {
-  display: none; height: 2px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 99px; overflow: hidden;
-  margin: 12px 0;
-}
-.loader.on { display: block; }
-.loader-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--gold));
-  border-radius: 99px;
-  animation: slide 1.8s ease-in-out infinite;
-}
-@keyframes slide{0%{width:0%;margin-left:0%}50%{width:60%;margin-left:20%}100%{width:0%;margin-left:100%}}
-
-/* INNER TABS (resume) */
-.inner-tabs-row { display: flex; gap: 6px; margin-bottom: 24px; }
-.itab {
-  padding: 7px 14px; border-radius: 7px; cursor: pointer;
-  font-size: 12px; font-weight: 500; color: #888;
-  border: 1px solid var(--border); background: none;
-  transition: all 0.18s; font-family: 'DM Sans', sans-serif;
-}
-.itab.active { background: var(--ink); color: white; border-color: var(--ink); }
-.itab:hover:not(.active) { color: var(--ink); }
-
-.ipanel { display: none; }
-.ipanel.active { display: block; }
-
-/* INTERVIEW QUESTION BOX */
-.q-box {
-  background: var(--white); border: 1px solid var(--border);
-  border-radius: 12px; padding: 22px; margin-bottom: 16px;
-}
-.q-tag {
-  display: inline-block; font-size: 10px; font-weight: 700;
-  letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 10px;
-  border: 1px solid rgba(255,77,28,0.2);
-  padding: 3px 9px; border-radius: 4px; background: rgba(255,77,28,0.04);
-}
-.q-text { font-size: 15px; font-weight: 500; line-height: 1.55; color: var(--ink); }
-.q-code {
-  background: var(--fog2); padding: 2px 7px;
-  border-radius: 4px; font-family: monospace; font-size: 13px;
+.score-num.good{color:var(--cyan);}
+.score-num.bad{color:var(--pink);}
+.score-lbl{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;color:var(--silver2);
+  margin-top:4px;letter-spacing:1px;
 }
 
 /* PROGRESS */
-.prog-bar { height: 6px; background: var(--fog3); border-radius: 99px; overflow: hidden; }
-.prog-fill {
-  height: 100%; background: linear-gradient(90deg, var(--accent), var(--gold));
-  border-radius: 99px; transition: width 0.5s ease;
+.prog-bar{height:3px;background:rgba(124,58,237,0.1);border-radius:99px;overflow:hidden;}
+.prog-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--purple),var(--cyan));
+  border-radius:99px;transition:width 0.5s ease;
 }
 
-/* SCORE CARDS */
-.score-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 24px; }
-.score-card {
-  background: var(--fog2); border: 1px solid var(--border);
-  border-radius: 10px; padding: 14px; text-align: center;
+/* CHAT */
+.chat-box{
+  background:rgba(8,6,18,0.98);
+  border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;
+  display:flex;flex-direction:column;height:480px;
+  position:relative;
 }
-.score-num {
-  font-family: 'Syne', sans-serif;
-  font-size: 26px; font-weight: 800; color: var(--ink);
+.chat-box::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--purple),var(--cyan),var(--pink));
+  z-index:1;
 }
-.score-num.good { color: #16a34a; }
-.score-num.bad  { color: var(--accent); }
-.score-lbl { font-size: 11px; color: #888; margin-top: 2px; }
+.chat-header{
+  padding:16px 20px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+  background:rgba(124,58,237,0.05);
+}
+.chat-avatar{
+  width:32px;height:32px;
+  background:linear-gradient(135deg,var(--purple),var(--cyan));
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;
+  box-shadow:0 0 12px rgba(124,58,237,0.4);
+}
+.chat-name{
+  font-family:'Orbitron',sans-serif;
+  font-size:12px;font-weight:700;
+  color:var(--white);letter-spacing:1px;
+}
+.chat-status{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--cyan);letter-spacing:1px;
+}
+.chat-messages{
+  flex:1;overflow-y:auto;padding:20px;
+  display:flex;flex-direction:column;gap:12px;
+}
+.chat-messages::-webkit-scrollbar{width:3px;}
+.chat-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
 
-/* MOCK CHAT */
-.chat-box {
-  background: var(--ink); border-radius: 16px;
-  padding: 0; overflow: hidden;
-  display: flex; flex-direction: column; height: 480px;
+.msg-ai{
+  align-self:flex-start;max-width:82%;
+  background:rgba(124,58,237,0.1);
+  border:1px solid var(--border);
+  padding:11px 14px;border-radius:10px 10px 10px 2px;
+  font-size:13px;color:var(--silver3);line-height:1.6;white-space:pre-wrap;
 }
-.chat-header {
-  padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.08);
-  display: flex; align-items: center; gap: 10px;
+.msg-user{
+  align-self:flex-end;max-width:78%;
+  background:linear-gradient(135deg,var(--purple),var(--purple2));
+  padding:11px 14px;border-radius:10px 10px 2px 10px;
+  font-size:13px;color:white;line-height:1.6;
+  box-shadow:0 0 16px rgba(124,58,237,0.3);
 }
-.chat-avatar {
-  width: 32px; height: 32px; background: var(--accent);
-  border-radius: 8px; display: flex; align-items: center;
-  justify-content: center; font-size: 15px;
-}
-.chat-name { font-size: 14px; font-weight: 600; color: white; }
-.chat-status { font-size: 11px; color: rgba(255,255,255,0.4); }
-.chat-messages {
-  flex: 1; overflow-y: auto; padding: 20px;
-  display: flex; flex-direction: column; gap: 12px;
-}
-.chat-messages::-webkit-scrollbar { width: 4px; }
-.chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
-
-.msg-ai {
-  align-self: flex-start; max-width: 82%;
-  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.08);
-  padding: 11px 14px; border-radius: 12px 12px 12px 3px;
-  font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.6; white-space: pre-wrap;
-}
-.msg-user {
-  align-self: flex-end; max-width: 78%;
-  background: var(--accent); padding: 11px 14px;
-  border-radius: 12px 12px 3px 12px;
-  font-size: 13px; color: white; line-height: 1.6;
-}
-.msg-sys {
-  align-self: center; font-size: 11px;
-  color: rgba(255,255,255,0.25); padding: 4px 0;
-}
-
-.chat-input-row {
-  padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.08);
-  display: flex; gap: 8px;
-}
-.chat-input {
-  flex: 1; background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 9px; padding: 10px 14px;
-  color: white; font-size: 13px; font-family: 'DM Sans', sans-serif;
-  outline: none; resize: none; min-height: 42px; max-height: 100px;
-}
-.chat-input::placeholder { color: rgba(255,255,255,0.25); }
-.chat-input:focus { border-color: rgba(255,255,255,0.2); }
-.chat-send {
-  width: 42px; height: 42px; border-radius: 9px;
-  background: var(--accent); border: none; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  color: white; font-size: 16px; transition: all 0.18s;
-  flex-shrink: 0;
-}
-.chat-send:hover { background: #e03d10; transform: scale(1.05); }
-
-/* ── PRICING ── */
-.pricing-section {
-  padding: 100px 48px; background: var(--ink);
-  color: var(--white);
-}
-.pricing-inner { max-width: 1100px; margin: 0 auto; }
-
-.pricing-label {
-  font-size: 11px; font-weight: 600; letter-spacing: 2.5px;
-  text-transform: uppercase; color: rgba(255,255,255,0.35);
-  margin-bottom: 16px;
+.msg-sys{
+  align-self:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:rgba(148,163,184,0.3);
+  letter-spacing:1px;padding:4px 0;
 }
 
-.pricing-title {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(32px, 4vw, 52px);
-  font-weight: 800; letter-spacing: -2px;
-  line-height: 1.05; margin-bottom: 60px;
+.chat-input-row{
+  padding:12px 16px;
+  border-top:1px solid var(--border);
+  display:flex;gap:8px;
+  background:rgba(124,58,237,0.03);
+}
+.chat-input{
+  flex:1;
+  background:rgba(124,58,237,0.06);
+  border:1px solid var(--border);
+  border-radius:8px;padding:10px 14px;
+  color:var(--silver);
+  font-size:13px;font-family:'Rajdhani',sans-serif;
+  outline:none;resize:none;
+  min-height:42px;max-height:100px;cursor:none;
+}
+.chat-input::placeholder{color:rgba(148,163,184,0.3);}
+.chat-input:focus{border-color:var(--purple);box-shadow:0 0 12px rgba(124,58,237,0.2);}
+.chat-send{
+  width:42px;height:42px;border-radius:8px;
+  background:linear-gradient(135deg,var(--purple),var(--purple2));
+  border:none;cursor:none;
+  display:flex;align-items:center;justify-content:center;
+  color:white;font-size:16px;transition:all 0.2s;flex-shrink:0;
+  box-shadow:0 0 12px rgba(124,58,237,0.3);
+}
+.chat-send:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(124,58,237,0.5);}
+
+/* PRICING */
+.pricing-section{
+  padding:100px 48px;
+  background:var(--bg);
+  position:relative;
+}
+.pricing-inner{max-width:1100px;margin:0 auto;}
+
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+
+.plan{
+  border:1px solid var(--border);
+  border-radius:16px;padding:32px;
+  transition:all 0.2s;cursor:none;
+  position:relative;overflow:hidden;
+  background:rgba(124,58,237,0.03);
+}
+.plan::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border),transparent);
+  transition:all 0.3s;
+}
+.plan:hover{
+  border-color:rgba(124,58,237,0.4);
+  background:rgba(124,58,237,0.07);
+  transform:translateY(-4px);
+  box-shadow:0 20px 40px rgba(124,58,237,0.15);
+}
+.plan:hover::before{
+  background:linear-gradient(90deg,transparent,var(--purple),transparent);
+}
+.plan.featured{
+  border-color:var(--purple);
+  background:rgba(124,58,237,0.08);
+  box-shadow:0 0 40px rgba(124,58,237,0.2);
+}
+.plan.featured::before{
+  background:linear-gradient(90deg,transparent,var(--purple3),var(--cyan),var(--purple3),transparent);
 }
 
-.pricing-title em { font-style: normal; color: var(--gold); }
-
-.plans { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-
-.plan {
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 16px; padding: 32px;
-  transition: all 0.2s; cursor: pointer; position: relative;
-  background: rgba(255,255,255,0.02);
-}
-.plan:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
-.plan.featured {
-  border-color: var(--gold);
-  background: rgba(200,168,75,0.06);
+.plan-tag{
+  position:absolute;top:-1px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--purple),var(--cyan));
+  color:white;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:4px 14px;border-radius:0 0 8px 8px;
 }
 
-.plan-tag {
-  position: absolute; top: -10px; left: 24px;
-  background: var(--gold); color: var(--ink);
-  font-size: 10px; font-weight: 800; letter-spacing: 1px;
-  padding: 3px 10px; border-radius: 4px; text-transform: uppercase;
+.plan-name{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:500;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--silver2);margin-bottom:20px;margin-top:8px;
 }
 
-.plan-name {
-  font-size: 12px; font-weight: 600; letter-spacing: 1px;
-  text-transform: uppercase; color: rgba(255,255,255,0.4);
-  margin-bottom: 20px;
+.plan-price{
+  font-family:'Orbitron',sans-serif;
+  font-size:44px;font-weight:900;
+  color:var(--white);margin-bottom:4px;line-height:1;
+}
+.plan-price sup{font-size:18px;vertical-align:top;margin-top:10px;font-weight:600;color:var(--purple3);}
+.plan-period{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:var(--silver2);
+  margin-bottom:24px;letter-spacing:0.5px;
 }
 
-.plan-price {
-  font-family: 'Syne', sans-serif;
-  font-size: 44px; font-weight: 800; line-height: 1;
-  color: white; margin-bottom: 4px;
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.plan-features li{
+  font-size:13px;font-weight:500;color:var(--silver2);
+  display:flex;align-items:center;gap:8px;
 }
-.plan-price sup { font-size: 20px; vertical-align: top; margin-top: 8px; font-weight: 600; }
+.plan-features li::before{content:'▸';color:var(--purple3);font-size:10px;flex-shrink:0;}
 
-.plan-period { font-size: 13px; color: rgba(255,255,255,0.35); margin-bottom: 24px; }
-
-.plan-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
-.plan-features li {
-  font-size: 13px; color: rgba(255,255,255,0.65);
-  display: flex; align-items: center; gap: 8px;
+.plan-btn{
+  width:100%;padding:13px;border-radius:8px;
+  font-family:'Rajdhani',sans-serif;
+  font-size:13px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  cursor:none;
+  border:1px solid var(--border);
+  background:rgba(124,58,237,0.08);color:var(--silver2);
+  transition:all 0.2s;
 }
-.plan-features li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
-
-.plan-btn {
-  width: 100%; padding: 13px; border-radius: 9px;
-  font-size: 14px; font-weight: 500; cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.06); color: white;
-  transition: all 0.18s; font-family: 'DM Sans', sans-serif;
+.plan-btn:hover{border-color:var(--purple3);color:var(--purple3);background:rgba(124,58,237,0.15);}
+.plan-featured-btn{
+  background:linear-gradient(135deg,var(--purple),var(--purple2)) !important;
+  color:white !important;border-color:var(--purple) !important;
+  box-shadow:0 0 24px rgba(124,58,237,0.4) !important;
 }
-.plan-btn:hover { background: rgba(255,255,255,0.12); }
-.plan-featured-btn {
-  background: var(--gold) !important; color: var(--ink) !important;
-  border-color: var(--gold) !important; font-weight: 600 !important;
-}
-.plan-featured-btn:hover { background: #d4b055 !important; }
+.plan-featured-btn:hover{box-shadow:0 0 36px rgba(124,58,237,0.6) !important;transform:translateY(-1px);}
 
-/* ── TOAST ── */
-.toast {
-  position: fixed; bottom: 28px; right: 28px; z-index: 500;
-  padding: 13px 20px; border-radius: 10px; font-size: 14px; font-weight: 500;
-  transform: translateY(60px); opacity: 0; transition: all 0.25s;
-  pointer-events: none;
+/* BETA BANNER */
+.beta-banner{
+  background:linear-gradient(135deg,rgba(124,58,237,0.12),rgba(34,211,238,0.06));
+  border:1px solid rgba(124,58,237,0.3);
+  border-radius:12px;padding:20px 28px;
+  margin-bottom:40px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
+  position:relative;overflow:hidden;
 }
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast.ok  { background: var(--ink); color: white; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
-.toast.err { background: var(--accent); color: white; }
-.toast.inf { background: var(--accent2); color: white; }
+.beta-banner::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),var(--purple),transparent);
+}
+.beta-tag{
+  background:linear-gradient(135deg,var(--purple),var(--cyan));
+  color:white;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:700;
+  padding:5px 12px;border-radius:4px;
+  letter-spacing:2px;text-transform:uppercase;
+  white-space:nowrap;
+}
+.beta-text-main{font-size:16px;font-weight:700;color:var(--white);}
+.beta-text-sub{font-size:13px;color:var(--silver2);margin-top:3px;}
 
-/* ── RESPONSIVE ── */
+/* TOAST */
+.toast{
+  position:fixed;bottom:28px;right:28px;z-index:500;
+  padding:14px 22px;border-radius:10px;
+  font-family:'Rajdhani',sans-serif;
+  font-size:14px;font-weight:600;letter-spacing:0.5px;
+  transform:translateY(60px);opacity:0;transition:all 0.25s;
+  pointer-events:none;
+}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.ok{background:linear-gradient(135deg,var(--purple),var(--purple2));color:white;box-shadow:0 8px 24px rgba(124,58,237,0.4);}
+.toast.err{background:linear-gradient(135deg,#dc2626,#ef4444);color:white;}
+.toast.inf{background:linear-gradient(135deg,#0891b2,var(--cyan));color:var(--bg);}
+
+/* RESPONSIVE */
 @media(max-width:900px){
-  nav { padding: 14px 20px; }
-  .nav-links { display: none; }
-  .hero { padding: 100px 20px 60px; }
-  .hero-stats { display: none; }
-  .section { padding: 60px 20px; }
-  .tools-inner { padding: 60px 20px; }
-  .tool-panel.active { grid-template-columns: 1fr; }
-  .pricing-section { padding: 60px 20px; }
-  .plans { grid-template-columns: 1fr; gap: 12px; }
-  .score-row { grid-template-columns: repeat(3,1fr); }
-  .tool-tabs { overflow-x: auto; }
+  nav{padding:14px 20px;}
+  .nav-links{display:none;}
+  .hero{padding:100px 20px 60px;}
+  .hero-visual{display:none;}
+  .tools-inner{padding:60px 20px;}
+  .tool-panel.active{grid-template-columns:1fr;}
+  .pricing-section{padding:60px 20px;}
+  .plans{grid-template-columns:1fr;gap:12px;}
+  .tool-tabs{overflow-x:auto;}
 }
 
-/* ── MOBILE NAV ── */
-.mob-nav {
-  display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(250,250,248,0.95); backdrop-filter: blur(16px);
-  border-top: 1px solid var(--border);
-  padding: 10px 20px 16px;
+/* MOBILE NAV */
+.mob-nav{
+  display:none;position:fixed;
+  bottom:0;left:0;right:0;z-index:100;
+  background:rgba(8,6,18,0.95);
+  backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  padding:10px 20px 16px;
 }
-.mob-nav-inner { display: flex; justify-content: space-around; }
-.mob-tab {
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
-  font-size: 10px; font-weight: 500; color: #999; cursor: pointer;
-  border: none; background: none; font-family: 'DM Sans', sans-serif;
-  padding: 4px 10px; border-radius: 8px; transition: all 0.15s;
+.mob-nav-inner{display:flex;justify-content:space-around;}
+.mob-tab{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:500;
+  letter-spacing:1px;text-transform:uppercase;
+  color:var(--silver2);cursor:none;
+  border:none;background:none;
+  padding:4px 10px;border-radius:8px;transition:all 0.15s;
 }
-.mob-tab.active { color: var(--ink); background: var(--fog2); }
-.mob-tab-icon { font-size: 18px; }
+.mob-tab.active{color:var(--purple3);}
+.mob-tab-icon{font-size:18px;}
 
-@media(max-width:900px){ .mob-nav { display: block; } body { padding-bottom: 70px; } }
+@media(max-width:900px){.mob-nav{display:block;}body{padding-bottom:70px;}}
 </style>
 </head>
 <body>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
@@ -621,37 +859,55 @@ nav {
     <button class="nav-link" onclick="goTo('tools')">Tools <span class="nav-badge">AI</span></button>
     <button class="nav-link" onclick="goTo('pricing')">Pricing</button>
   </div>
-  <button class="btn btn-dark" style="padding:10px 22px;font-size:13px;" onclick="goTo('tools')">
-    Try Free Now 🎉
+  <button class="btn btn-primary" style="padding:10px 22px;font-size:12px;" onclick="goTo('tools')">
+    Try Free Now ⚡
   </button>
 </nav>
 
 <!-- HERO -->
 <section id="hero" style="padding-top:0;">
   <div class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
+    <div class="hero-orb1"></div>
+    <div class="hero-orb2"></div>
     <div class="hero-content">
-      <div class="hero-eyebrow">🎉 Free Beta — Limited Spots</div>
-      <h1>Get Hired<br>as a <em>Data</em><br><em>Analyst.</em></h1>
+      <div class="hero-tag">🎉 Free Beta — Limited Spots</div>
+      <h1>
+        Get Hired<br>
+        <span class="line2">as a Data Analyst.</span>
+      </h1>
       <p class="hero-sub">Roadmap. Resume. Interview prep. Three AI-powered tools built specifically for data analysts in India.</p>
       <div class="hero-actions">
-        <button class="btn btn-dark" onclick="goTo('tools')">Try the Tools ↓</button>
-        <button class="btn btn-ghost" onclick="goTo('pricing')">🎉 Free Beta — See Details</button>
+        <button class="btn btn-primary" onclick="goTo('tools')">Launch Tools ⚡</button>
+        <button class="btn btn-outline" onclick="goTo('pricing')">🎉 Free Beta Details</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">4.8<span>★</span></div>
+          <div class="stat-label">Rating</div>
+        </div>
+        <div class="stat" style="border-left:1px solid var(--border);padding-left:32px;">
+          <div class="stat-num" style="color:var(--purple3);">Free</div>
+          <div class="stat-label">Beta Access</div>
+        </div>
+        <div class="stat" style="border-left:1px solid var(--border);padding-left:32px;">
+          <div class="stat-num">90<span>d</span></div>
+          <div class="stat-label">To Job-Ready</div>
+        </div>
       </div>
     </div>
-    <div class="hero-stats">
-      <div class="stat-card">
-        <div class="stat-val">4.8<span>★</span></div>
-        <div class="stat-desc">Average Rating</div>
+
+    <div class="hero-visual">
+      <div class="holo-card">
+        <div class="holo-val cyan">4.8★</div>
+        <div class="holo-desc">Avg Rating</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-val" style="color:var(--accent);">Free</div>
-        <div class="stat-desc">Beta Access Now 🎉</div>
+      <div class="holo-card">
+        <div class="holo-val purple">Free</div>
+        <div class="holo-desc">Beta Now 🎉</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-val">90<span>d</span></div>
-        <div class="stat-desc">To Job-Ready</div>
+      <div class="holo-card">
+        <div class="holo-val">90d</div>
+        <div class="holo-desc">Job Ready</div>
       </div>
     </div>
   </div>
@@ -659,12 +915,10 @@ nav {
 
 <!-- TOOLS -->
 <section id="tools">
-  <div class="tools-wrapper">
+  <div class="tools-section">
     <div class="tools-inner">
-      <div style="margin-bottom:36px;">
-        <div class="section-label">Three Tools</div>
-        <div class="section-title">Everything You<br>Need. Nothing<br>You Don't.</div>
-      </div>
+      <div class="section-eyebrow">// Three AI Tools</div>
+      <div class="section-title">Everything You Need.<br>Nothing You Don't.</div>
 
       <div class="tool-tabs">
         <button class="tool-tab active" onclick="switchTool('roadmap')">🗺️ Roadmap</button>
@@ -672,11 +926,11 @@ nav {
         <button class="tool-tab" onclick="switchTool('interview')">🎯 Interview</button>
       </div>
 
-      <!-- ── ROADMAP TOOL ── -->
+      <!-- ROADMAP -->
       <div id="tool-roadmap" class="tool-panel active">
         <div class="form-card">
           <div class="field">
-            <label>Current Level</label>
+            <label>// Current Level</label>
             <select id="rm-level">
               <option value="complete-beginner">Complete Beginner</option>
               <option value="excel-user">Excel User (some analytics)</option>
@@ -686,7 +940,7 @@ nav {
             </select>
           </div>
           <div class="field">
-            <label>Target Role</label>
+            <label>// Target Role</label>
             <select id="rm-role">
               <option value="data-analyst">Data Analyst</option>
               <option value="business-analyst">Business Analyst</option>
@@ -696,7 +950,7 @@ nav {
             </select>
           </div>
           <div class="field">
-            <label>Timeline</label>
+            <label>// Timeline</label>
             <select id="rm-timeline">
               <option value="3-months">3 Months — Intensive</option>
               <option value="6-months">6 Months — Balanced</option>
@@ -704,7 +958,7 @@ nav {
             </select>
           </div>
           <div class="field">
-            <label>Skills You Already Have</label>
+            <label>// Skills You Already Have</label>
             <div class="chips" id="rm-chips">
               <span class="chip" onclick="tog(this)">Excel</span>
               <span class="chip" onclick="tog(this)">SQL</span>
@@ -716,39 +970,37 @@ nav {
               <span class="chip" onclick="tog(this)">AWS</span>
             </div>
           </div>
-          <button class="btn btn-dark" style="width:100%;justify-content:center;" onclick="genRoadmap()">
-            Generate My Roadmap →
+          <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="genRoadmap()">
+            Generate My Roadmap ⚡
           </button>
         </div>
-
         <div class="output-card">
-          <div class="output-status"><div class="output-dot"></div>AI Output</div>
+          <div class="output-status"><div class="output-dot"></div>AI Output Stream</div>
           <div class="loader" id="rm-loader"><div class="loader-bar"></div></div>
           <div class="output-empty" id="rm-empty">
             <div class="output-empty-icon">🗺️</div>
-            <div class="output-empty-text">Fill in your details and hit Generate.<br>Your week-by-week plan will appear here.</div>
+            <div class="output-empty-text">// Fill in your details and hit Generate.<br>// Your week-by-week plan will appear here.</div>
           </div>
           <div class="output-text" id="rm-out"></div>
           <div class="output-footer" style="display:none;" id="rm-footer">
-            <span style="font-size:11px;color:rgba(255,255,255,0.3);">Your personalized roadmap</span>
-            <button class="output-copy" onclick="cp('rm-out')">Copy</button>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(124,58,237,0.5);letter-spacing:1px;">// ROADMAP GENERATED</span>
+            <button class="output-copy" onclick="cp('rm-out')">COPY</button>
           </div>
         </div>
       </div>
 
-      <!-- ── RESUME TOOL ── -->
+      <!-- RESUME -->
       <div id="tool-resume" class="tool-panel" style="display:none;">
         <div class="form-card">
           <div class="inner-tabs-row">
             <button class="itab active" onclick="switchResume('optimizer')">Optimizer</button>
             <button class="itab" onclick="switchResume('keywords')">ATS Keywords</button>
-            <button class="itab" onclick="switchResume('bullets')">Bullet Rewriter</button>
+            <button class="itab" onclick="switchResume('bullets')">Bullets</button>
           </div>
-
           <div id="res-optimizer" class="ipanel active">
-            <div class="field"><label>Your Resume</label><textarea id="res-cv" placeholder="Paste your full resume text here..."></textarea></div>
-            <div class="field"><label>Job Description</label><textarea id="res-jd" placeholder="Paste the job description you're applying to..."></textarea></div>
-            <div class="field"><label>Years of Experience</label>
+            <div class="field"><label>// Your Resume</label><textarea id="res-cv" placeholder="Paste your full resume text here..."></textarea></div>
+            <div class="field"><label>// Job Description</label><textarea id="res-jd" placeholder="Paste the job description you're applying to..."></textarea></div>
+            <div class="field"><label>// Years of Experience</label>
               <select id="res-exp">
                 <option value="fresher">Fresher / 0 years</option>
                 <option value="1">1 year</option>
@@ -757,42 +1009,39 @@ nav {
                 <option value="5+">5+ years</option>
               </select>
             </div>
-            <button class="btn btn-dark" style="width:100%;justify-content:center;" onclick="optimizeResume()">Optimize Resume →</button>
+            <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="optimizeResume()">Optimize Resume ⚡</button>
           </div>
-
           <div id="res-keywords" class="ipanel">
-            <div class="field"><label>Job Description</label><textarea id="ats-jd" placeholder="Paste JD to extract ATS keywords..."></textarea></div>
-            <div class="field"><label>Your Resume (Optional)</label><textarea id="ats-cv" placeholder="Paste resume to see what you're missing..."></textarea></div>
-            <button class="btn btn-dark" style="width:100%;justify-content:center;" onclick="analyzeATS()">Analyze Keywords →</button>
+            <div class="field"><label>// Job Description</label><textarea id="ats-jd" placeholder="Paste JD to extract ATS keywords..."></textarea></div>
+            <div class="field"><label>// Your Resume (Optional)</label><textarea id="ats-cv" placeholder="Paste resume to see what you're missing..."></textarea></div>
+            <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="analyzeATS()">Analyze Keywords ⚡</button>
           </div>
-
           <div id="res-bullets" class="ipanel">
-            <div class="field"><label>Weak Bullets (one per line)</label>
+            <div class="field"><label>// Weak Bullets (one per line)</label>
               <textarea id="bul-in" placeholder="Worked on data analysis&#10;Made reports&#10;Used SQL to query database"></textarea>
             </div>
-            <div class="field"><label>Your Level</label>
+            <div class="field"><label>// Your Level</label>
               <select id="bul-lvl"><option value="junior">Junior</option><option value="mid">Mid Level</option><option value="senior">Senior</option></select>
             </div>
-            <button class="btn btn-dark" style="width:100%;justify-content:center;" onclick="rewriteBullets()">Rewrite with Impact →</button>
+            <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="rewriteBullets()">Rewrite with Impact ⚡</button>
           </div>
         </div>
-
         <div class="output-card">
-          <div class="output-status"><div class="output-dot"></div>AI Output</div>
+          <div class="output-status"><div class="output-dot"></div>AI Output Stream</div>
           <div class="loader" id="res-loader"><div class="loader-bar"></div></div>
           <div class="output-empty" id="res-empty">
             <div class="output-empty-icon">📄</div>
-            <div class="output-empty-text">Your optimized resume,<br>ATS keywords, or power bullets<br>will appear here.</div>
+            <div class="output-empty-text">// Optimized resume, ATS keywords,<br>// or power bullets will appear here.</div>
           </div>
           <div class="output-text" id="res-out"></div>
           <div class="output-footer" style="display:none;" id="res-footer">
-            <span style="font-size:11px;color:rgba(255,255,255,0.3);">AI optimized output</span>
-            <button class="output-copy" onclick="cp('res-out')">Copy</button>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(124,58,237,0.5);letter-spacing:1px;">// RESUME OPTIMIZED</span>
+            <button class="output-copy" onclick="cp('res-out')">COPY</button>
           </div>
         </div>
       </div>
 
-      <!-- ── INTERVIEW TOOL ── -->
+      <!-- INTERVIEW -->
       <div id="tool-interview" class="tool-panel" style="display:none;">
         <div class="form-card" style="display:flex;flex-direction:column;gap:0;">
           <div class="inner-tabs-row">
@@ -802,22 +1051,20 @@ nav {
             <button class="itab" onclick="switchInt('mock')">Full Mock</button>
           </div>
 
-          <!-- SQL -->
           <div id="int-sql" class="ipanel active">
             <div class="q-box">
               <div class="q-tag">SQL · <span id="sql-diff">Intermediate</span></div>
               <div class="q-text" id="sql-q">You have a table <span class="q-code">orders(order_id, customer_id, amount, created_at)</span>.<br><br>Write a query to find customers with more than 3 orders AND total spend over $500, ordered by total spend descending.</div>
             </div>
-            <div class="field">
-              <label>Your SQL Answer</label>
-              <textarea id="sql-ans" placeholder="SELECT customer_id, COUNT(*) as orders,&#10;SUM(amount) as total_spend&#10;FROM orders&#10;GROUP BY customer_id&#10;HAVING ..." style="font-family:monospace;font-size:13px;min-height:130px;"></textarea>
+            <div class="field"><label>// Your SQL Answer</label>
+              <textarea id="sql-ans" placeholder="SELECT customer_id, COUNT(*) as orders,&#10;SUM(amount) as total_spend&#10;FROM orders&#10;GROUP BY customer_id&#10;HAVING ..." style="font-family:'JetBrains Mono',monospace;font-size:12px;min-height:120px;"></textarea>
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <button class="btn btn-dark" onclick="checkSQL()" style="padding:11px 20px;font-size:13px;">Check Answer</button>
-              <button class="btn btn-ghost" onclick="sqlHint()" style="padding:11px 20px;font-size:13px;">Hint</button>
-              <button class="btn btn-ghost" onclick="nextSQL()" style="padding:11px 20px;font-size:13px;">Next →</button>
+              <button class="btn btn-primary" onclick="checkSQL()" style="padding:10px 18px;font-size:11px;">Check Answer</button>
+              <button class="btn btn-outline" onclick="sqlHint()" style="padding:10px 18px;font-size:11px;">Hint</button>
+              <button class="btn btn-outline" onclick="nextSQL()" style="padding:10px 18px;font-size:11px;">Next →</button>
             </div>
-            <div class="score-row" style="margin-top:20px;">
+            <div class="score-row" style="margin-top:16px;">
               <div class="score-card"><div class="score-num" id="s-att">0</div><div class="score-lbl">Attempted</div></div>
               <div class="score-card"><div class="score-num good" id="s-cor">0</div><div class="score-lbl">Correct</div></div>
               <div class="score-card"><div class="score-num" id="s-acc">—</div><div class="score-lbl">Accuracy</div></div>
@@ -825,95 +1072,97 @@ nav {
             <div class="prog-bar"><div class="prog-fill" id="s-prog" style="width:0%"></div></div>
           </div>
 
-          <!-- CASE -->
           <div id="int-case" class="ipanel">
-            <div class="q-box" style="background:linear-gradient(135deg,rgba(255,77,28,0.04),rgba(200,168,75,0.04));">
+            <div class="q-box">
               <div class="q-tag">Case Study</div>
               <div class="q-text" id="case-q">Your company's DAU dropped 15% last Tuesday. The CEO needs an explanation by end of day. Walk through your complete analysis framework.</div>
             </div>
-            <div class="field"><label>Your Approach</label>
-              <textarea id="case-ans" placeholder="1. Clarifying questions I'd ask first...&#10;2. How I'd segment the problem...&#10;3. Data sources I'd check...&#10;4. Hypotheses I'd test..." style="min-height:160px;"></textarea>
+            <div class="field"><label>// Your Approach</label>
+              <textarea id="case-ans" placeholder="1. Clarifying questions I'd ask first...&#10;2. How I'd segment the problem...&#10;3. Data sources I'd check...&#10;4. Hypotheses I'd test..." style="min-height:150px;"></textarea>
             </div>
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
-              <button class="btn btn-dark" onclick="evalCase()" style="padding:11px 20px;font-size:13px;">Get Evaluation</button>
-              <button class="btn btn-ghost" onclick="caseHint()" style="padding:11px 20px;font-size:13px;">Show Framework</button>
-              <button class="btn btn-ghost" onclick="newCase()" style="padding:11px 20px;font-size:13px;">New Case</button>
+              <button class="btn btn-primary" onclick="evalCase()" style="padding:10px 18px;font-size:11px;">Get Evaluation</button>
+              <button class="btn btn-outline" onclick="caseHint()" style="padding:10px 18px;font-size:11px;">Framework</button>
+              <button class="btn btn-outline" onclick="newCase()" style="padding:10px 18px;font-size:11px;">New Case</button>
             </div>
           </div>
 
-          <!-- BEHAVIORAL -->
           <div id="int-behavioral" class="ipanel">
-            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;">
-              <button class="btn btn-ghost" onclick="loadBQ('conflict')" style="padding:8px 14px;font-size:12px;">😤 Conflict</button>
-              <button class="btn btn-ghost" onclick="loadBQ('leadership')" style="padding:8px 14px;font-size:12px;">👑 Leadership</button>
-              <button class="btn btn-ghost" onclick="loadBQ('failure')" style="padding:8px 14px;font-size:12px;">📉 Failure</button>
-              <button class="btn btn-ghost" onclick="loadBQ('success')" style="padding:8px 14px;font-size:12px;">🏆 Success</button>
-              <button class="btn btn-ghost" onclick="loadBQ('random')" style="padding:8px 14px;font-size:12px;background:var(--fog2);">🎲 Random</button>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
+              <button class="btn btn-outline" onclick="loadBQ('conflict')" style="padding:7px 12px;font-size:11px;">😤 Conflict</button>
+              <button class="btn btn-outline" onclick="loadBQ('leadership')" style="padding:7px 12px;font-size:11px;">👑 Leadership</button>
+              <button class="btn btn-outline" onclick="loadBQ('failure')" style="padding:7px 12px;font-size:11px;">📉 Failure</button>
+              <button class="btn btn-outline" onclick="loadBQ('success')" style="padding:7px 12px;font-size:11px;">🏆 Success</button>
+              <button class="btn btn-cyan" onclick="loadBQ('random')" style="padding:7px 12px;font-size:11px;">🎲 Random</button>
             </div>
             <div class="q-box">
-              <div class="q-tag">Behavioral Question</div>
+              <div class="q-tag">Behavioral</div>
               <div class="q-text" id="bq-q">Select a category above to get a question</div>
             </div>
-            <div class="field"><label>Your Answer — Use STAR Method</label>
-              <textarea id="bq-ans" placeholder="Situation: ...&#10;Task: ...&#10;Action: ...&#10;Result: ..." style="min-height:140px;"></textarea>
+            <div class="field"><label>// Your Answer — STAR Method</label>
+              <textarea id="bq-ans" placeholder="Situation: ...&#10;Task: ...&#10;Action: ...&#10;Result: ..." style="min-height:130px;"></textarea>
             </div>
-            <button class="btn btn-dark" onclick="evalBQ()" style="padding:11px 20px;font-size:13px;">Get STAR Feedback</button>
+            <button class="btn btn-primary" onclick="evalBQ()" style="padding:10px 18px;font-size:11px;">Get STAR Feedback</button>
           </div>
 
-          <!-- MOCK -->
           <div id="int-mock" class="ipanel">
-            <div class="field"><label>Company Type</label>
-              <select id="mock-co"><option value="startup">Startup</option><option value="tech">Big Tech (FAANG-style)</option><option value="finance">Finance / Banking</option><option value="consulting">Consulting</option></select>
+            <div class="field"><label>// Company Type</label>
+              <select id="mock-co">
+                <option value="startup">Startup</option>
+                <option value="tech">Big Tech (FAANG-style)</option>
+                <option value="finance">Finance / Banking</option>
+                <option value="consulting">Consulting</option>
+              </select>
             </div>
-            <div class="field"><label>Difficulty</label>
-              <select id="mock-diff"><option value="entry">Entry Level</option><option value="mid">Mid Level</option><option value="senior">Senior</option></select>
+            <div class="field"><label>// Difficulty</label>
+              <select id="mock-diff">
+                <option value="entry">Entry Level</option>
+                <option value="mid">Mid Level</option>
+                <option value="senior">Senior</option>
+              </select>
             </div>
-            <button class="btn btn-accent" onclick="startMock()" style="width:100%;justify-content:center;">
-              Start Mock Interview 🚀
+            <button class="btn btn-cyan" onclick="startMock()" style="width:100%;justify-content:center;">
+              Initialize Mock Interview 🚀
             </button>
           </div>
         </div>
 
-        <!-- Interview Output / Chat -->
         <div>
-          <!-- Normal output for SQL/Case/Behavioral -->
           <div id="int-output-wrap">
             <div class="output-card">
-              <div class="output-status"><div class="output-dot"></div>AI Feedback</div>
+              <div class="output-status"><div class="output-dot"></div>AI Feedback Stream</div>
               <div class="loader" id="int-loader"><div class="loader-bar"></div></div>
               <div class="output-empty" id="int-empty">
                 <div class="output-empty-icon">🎯</div>
-                <div class="output-empty-text">Submit your answer to get<br>detailed AI feedback and scoring.</div>
+                <div class="output-empty-text">// Submit your answer to get<br>// detailed AI feedback and scoring.</div>
               </div>
               <div class="output-text" id="int-out"></div>
               <div class="output-footer" style="display:none;" id="int-footer">
-                <span style="font-size:11px;color:rgba(255,255,255,0.3);">AI evaluation</span>
-                <button class="output-copy" onclick="cp('int-out')">Copy</button>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(124,58,237,0.5);letter-spacing:1px;">// AI EVALUATION</span>
+                <button class="output-copy" onclick="cp('int-out')">COPY</button>
               </div>
             </div>
           </div>
 
-          <!-- Mock Chat -->
           <div id="mock-chat-wrap" style="display:none;">
             <div class="chat-box">
               <div class="chat-header">
                 <div class="chat-avatar">🤖</div>
                 <div>
                   <div class="chat-name">DataPath Interviewer</div>
-                  <div class="chat-status" id="chat-status">Ready to begin</div>
+                  <div class="chat-status" id="chat-status">// Initializing...</div>
                 </div>
               </div>
               <div class="chat-messages" id="chat-msgs"></div>
               <div class="loader" id="mock-loader" style="margin:0;border-radius:0;"><div class="loader-bar"></div></div>
               <div class="chat-input-row">
-                <textarea class="chat-input" id="mock-inp" placeholder="Type your answer..." rows="1"></textarea>
+                <textarea class="chat-input" id="mock-inp" placeholder="// Type your answer..." rows="1"></textarea>
                 <button class="chat-send" onclick="sendMock()">↑</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -922,27 +1171,26 @@ nav {
 <section id="pricing">
   <div class="pricing-section">
     <div class="pricing-inner">
-      <div class="pricing-label">Simple Pricing</div>
-      <div class="pricing-title">Invest in your<br>career. <em>Get hired.</em></div>
+      <div class="section-eyebrow">// Simple Pricing</div>
+      <div class="section-title">Invest in Your Career.<br><span style="color:var(--purple3);">Get Hired.</span></div>
 
-      <!-- FREE BETA BANNER -->
-      <div style="background:linear-gradient(135deg,rgba(200,168,75,0.15),rgba(255,77,28,0.1));border:1px solid rgba(200,168,75,0.4);border-radius:14px;padding:20px 28px;margin-bottom:40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <div class="beta-banner">
         <div style="display:flex;align-items:center;gap:14px;">
-          <div style="background:var(--gold);color:var(--ink);font-size:11px;font-weight:800;padding:5px 12px;border-radius:6px;letter-spacing:1px;white-space:nowrap;">🎉 FREE BETA</div>
+          <div class="beta-tag">🎉 Free Beta</div>
           <div>
-            <div style="font-size:16px;font-weight:700;color:white;">All tools are 100% FREE right now!</div>
-            <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-top:3px;">You are an early beta user — no payment needed. Paid plans launch soon.</div>
+            <div class="beta-text-main">All tools are 100% FREE right now!</div>
+            <div class="beta-text-sub">You are an early beta user — no payment needed. Paid plans launch soon.</div>
           </div>
         </div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.4);text-align:right;">
-          <span style="color:var(--gold);font-weight:700;" id="beta-count">🔥 Limited beta spots</span><br>
-          <span style="font-size:11px;">Lock in free access before paid launch</span>
+        <div style="text-align:right;">
+          <div style="color:var(--purple3);font-weight:700;font-size:13px;">🔥 Limited beta spots</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--silver2);letter-spacing:1px;">Lock in before paid launch</div>
         </div>
       </div>
 
       <div class="plans">
-        <div class="plan" style="opacity:0.6;cursor:default;">
-          <div class="plan-tag" style="background:rgba(255,255,255,0.15);color:white;">Coming Soon</div>
+        <div class="plan" style="opacity:0.5;cursor:default;">
+          <div class="plan-tag" style="background:rgba(148,163,184,0.2);color:var(--silver2);">Coming Soon</div>
           <div class="plan-name">Monthly</div>
           <div class="plan-price"><sup>₹</sup>299</div>
           <div class="plan-period">per month · after beta ends</div>
@@ -959,7 +1207,7 @@ nav {
         <div class="plan featured">
           <div class="plan-tag">🎉 Free Right Now</div>
           <div class="plan-name">Beta Access</div>
-          <div class="plan-price" style="color:var(--gold);">Free</div>
+          <div class="plan-price" style="color:var(--purple3);">Free</div>
           <div class="plan-period">while beta lasts · no card needed</div>
           <ul class="plan-features">
             <li>All 3 AI Tools Unlocked</li>
@@ -968,11 +1216,11 @@ nav {
             <li>Mock Interview Coach</li>
             <li>Founding Member Status 🏅</li>
           </ul>
-          <button class="plan-btn plan-featured-btn" onclick="scrollToTools()">Use Free Now →</button>
+          <button class="plan-btn plan-featured-btn" onclick="goTo('tools')">Launch Tools Now ⚡</button>
         </div>
 
-        <div class="plan" style="opacity:0.6;cursor:default;">
-          <div class="plan-tag" style="background:rgba(255,255,255,0.15);color:white;">Coming Soon</div>
+        <div class="plan" style="opacity:0.5;cursor:default;">
+          <div class="plan-tag" style="background:rgba(148,163,184,0.2);color:var(--silver2);">Coming Soon</div>
           <div class="plan-name">Lifetime</div>
           <div class="plan-price"><sup>₹</sup>999</div>
           <div class="plan-period">one-time · after beta ends</div>
@@ -987,15 +1235,15 @@ nav {
         </div>
       </div>
 
-      <div style="text-align:center;margin-top:36px;">
-        <div style="font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:16px;">
-          🚀 Using it for free now? <strong style="color:white;">Share with 1 friend</strong> who needs it — that's all we ask!
+      <div style="text-align:center;margin-top:40px;">
+        <div style="font-size:14px;color:var(--silver2);margin-bottom:16px;font-weight:500;">
+          🚀 Using it for free? <strong style="color:var(--white);">Share with 1 friend</strong> — that's all we ask!
         </div>
         <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
-          <button onclick="shareWhatsApp()" style="padding:11px 22px;border-radius:9px;border:1px solid rgba(255,255,255,0.15);background:rgba(37,211,102,0.15);color:#25d366;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">
+          <button onclick="shareWhatsApp()" style="padding:11px 22px;border-radius:8px;border:1px solid rgba(37,211,102,0.3);background:rgba(37,211,102,0.08);color:#25d366;font-size:13px;font-weight:700;cursor:none;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">
             📱 Share on WhatsApp
           </button>
-          <button onclick="shareLinkedIn()" style="padding:11px 22px;border-radius:9px;border:1px solid rgba(255,255,255,0.15);background:rgba(10,102,194,0.15);color:#0a66c2;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">
+          <button onclick="shareLinkedIn()" style="padding:11px 22px;border-radius:8px;border:1px solid rgba(10,102,194,0.3);background:rgba(10,102,194,0.08);color:#60a5fa;font-size:13px;font-weight:700;cursor:none;font-family:'Rajdhani',sans-serif;letter-spacing:1px;">
             💼 Share on LinkedIn
           </button>
         </div>
@@ -1014,9 +1262,17 @@ nav {
 </div>
 
 <script>
-// ══════════════════════════════════════════
-//  CONFIG — Replace with your backend URL
-// ══════════════════════════════════════════
+// ── CURSOR ────────────────────────────────
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX - 4 + 'px';
+  cur.style.top = e.clientY - 4 + 'px';
+  ring.style.left = e.clientX - 16 + 'px';
+  ring.style.top = e.clientY - 16 + 'px';
+});
+
+// ── CONFIG ───────────────────────────────
 const API = 'https://datapath-ai-backend.ayushkht07.workers.dev';
 
 // ── NAV ──────────────────────────────────
@@ -1033,22 +1289,16 @@ function mobTab(el) {
 
 // ── TOOL SWITCHER ─────────────────────────
 function switchTool(t) {
-  // Hide all panels
   ['roadmap','resume','interview'].forEach(n => {
     document.getElementById('tool-'+n).style.display = 'none';
     document.getElementById('tool-'+n).classList.remove('active');
   });
-
-  // Show selected panel
   const el = document.getElementById('tool-'+t);
   el.style.display = 'grid';
   el.classList.add('active');
-
-  // Highlight active tab
   document.querySelectorAll('.tool-tab').forEach((tab, i) => {
     tab.classList.toggle('active', ['roadmap','resume','interview'][i] === t);
   });
-
   if (t !== 'interview') resetMockUI();
 }
 
@@ -1075,11 +1325,9 @@ function switchInt(t) {
 
 // ── HELPERS ───────────────────────────────
 function tog(el) { el.classList.toggle('on'); }
-
 function getChips(id) {
   return [...document.querySelectorAll(`#${id} .chip.on`)].map(e=>e.textContent).join(', ') || 'None';
 }
-
 function showLoad(id) { document.getElementById(id+'-loader').classList.add('on'); }
 function hideLoad(id) { document.getElementById(id+'-loader').classList.remove('on'); }
 
@@ -1101,7 +1349,7 @@ function showIntResult(text) {
 
 function cp(id) {
   navigator.clipboard.writeText(document.getElementById(id).textContent || '')
-    .then(() => toast('Copied to clipboard!','ok'));
+    .then(() => toast('Copied!','ok'));
 }
 
 function toast(msg, type='ok') {
@@ -1110,6 +1358,7 @@ function toast(msg, type='ok') {
   setTimeout(() => el.className = 'toast', 3000);
 }
 
+// ── AI CALL ───────────────────────────────
 async function callAI(prompt, sys) {
   const body = { messages:[{role:'user',content:prompt}], max_tokens:1000 };
   if (sys) body.system = sys;
@@ -1127,38 +1376,30 @@ async function callAI(prompt, sys) {
   }
 }
 
-// ══════════════════════════════════════════
-//  TOOL 1 — ROADMAP
-// ══════════════════════════════════════════
+// ── ROADMAP ───────────────────────────────
 async function genRoadmap() {
   const level = document.getElementById('rm-level').value;
-  const role  = document.getElementById('rm-role').value;
-  const time  = document.getElementById('rm-timeline').value;
+  const role = document.getElementById('rm-role').value;
+  const time = document.getElementById('rm-timeline').value;
   const skills = getChips('rm-chips');
   showLoad('rm');
   document.getElementById('rm-empty').style.display = 'none';
   try {
-    const text = await callAI(
-      `Create a practical week-by-week learning roadmap.\n\nLevel: ${level}\nTarget Role: ${role}\nTimeline: ${time}\nCurrent Skills: ${skills}\n\nProvide 4-5 phases. Each phase: name + duration, what to learn (specific tools/topics), 2 free resources, 1 hands-on project, skills at phase end.\n\nBe specific, practical, and India job-market focused. End with 3 career tips.`
-    );
+    const text = await callAI(`Create a practical week-by-week learning roadmap.\n\nLevel: ${level}\nTarget Role: ${role}\nTimeline: ${time}\nCurrent Skills: ${skills}\n\nProvide 4-5 phases. Each phase: name + duration, what to learn (specific tools/topics), 2 free resources, 1 hands-on project, skills at phase end.\n\nBe specific, practical, and India job-market focused. End with 3 career tips.`);
     showResult('rm', text);
   } catch(e) { hideLoad('rm'); toast('AI error — try again','err'); }
 }
 
-// ══════════════════════════════════════════
-//  TOOL 2 — RESUME
-// ══════════════════════════════════════════
+// ── RESUME ────────────────────────────────
 async function optimizeResume() {
-  const cv  = document.getElementById('res-cv').value;
-  const jd  = document.getElementById('res-jd').value;
+  const cv = document.getElementById('res-cv').value;
+  const jd = document.getElementById('res-jd').value;
   const exp = document.getElementById('res-exp').value;
   if (!cv.trim() && !jd.trim()) { toast('Paste your resume or JD first','err'); return; }
   showLoad('res');
   document.getElementById('res-empty').style.display = 'none';
   try {
-    const text = await callAI(
-      `Optimize this resume for ATS and the job description.\n\nExperience: ${exp} years\nResume: ${cv||'Not provided'}\nJob Description: ${jd||'Generic Data Analyst role'}\n\nTasks:\n1. Rewrite bullets with strong verbs and impact metrics (%, numbers, ₹)\n2. Write a 3-line professional summary\n3. List 5 skills to add\n4. Give ATS match score out of 100 with reasoning\n\nBe specific and practical.`
-    );
+    const text = await callAI(`Optimize this resume for ATS and the job description.\n\nExperience: ${exp} years\nResume: ${cv||'Not provided'}\nJob Description: ${jd||'Generic Data Analyst role'}\n\nTasks:\n1. Rewrite bullets with strong verbs and impact metrics (%, numbers, ₹)\n2. Write a 3-line professional summary\n3. List 5 skills to add\n4. Give ATS match score out of 100 with reasoning\n\nBe specific and practical.`);
     showResult('res', text);
   } catch(e) { hideLoad('res'); toast('AI error — try again','err'); }
 }
@@ -1169,32 +1410,24 @@ async function analyzeATS() {
   showLoad('res');
   document.getElementById('res-empty').style.display = 'none';
   try {
-    const text = await callAI(
-      `Analyze this JD for ATS keywords.\n\nJD: ${jd}\nResume: ${document.getElementById('ats-cv').value||'Not provided'}\n\nProvide: 10 must-have keywords, 5 secondary keywords, which are missing from resume, ATS match score, 3 specific improvement tips.`
-    );
+    const text = await callAI(`Analyze this JD for ATS keywords.\n\nJD: ${jd}\nResume: ${document.getElementById('ats-cv').value||'Not provided'}\n\nProvide: 10 must-have keywords, 5 secondary keywords, which are missing from resume, ATS match score, 3 specific improvement tips.`);
     showResult('res', text);
   } catch(e) { hideLoad('res'); toast('AI error — try again','err'); }
 }
 
 async function rewriteBullets() {
   const bullets = document.getElementById('bul-in').value;
-  const level   = document.getElementById('bul-lvl').value;
+  const level = document.getElementById('bul-lvl').value;
   if (!bullets.trim()) { toast('Paste your bullet points first','err'); return; }
   showLoad('res');
   document.getElementById('res-empty').style.display = 'none';
   try {
-    const text = await callAI(
-      `Rewrite these ${level}-level resume bullets for a data analyst role. Use strong action verbs, add impact metrics (even estimated), include technical keywords.\n\nOriginal bullets:\n${bullets}\n\nShow: Original → Rewritten for each. Then list all power bullets ready to copy.`
-    );
+    const text = await callAI(`Rewrite these ${level}-level resume bullets for a data analyst role. Use strong action verbs, add impact metrics (even estimated), include technical keywords.\n\nOriginal bullets:\n${bullets}\n\nShow: Original → Rewritten for each. Then list all power bullets ready to copy.`);
     showResult('res', text);
   } catch(e) { hideLoad('res'); toast('AI error — try again','err'); }
 }
 
-// ══════════════════════════════════════════
-//  TOOL 3 — INTERVIEW
-// ══════════════════════════════════════════
-
-// SQL
+// ── INTERVIEW ─────────────────────────────
 let sqlIdx=0, sqlAtt=0, sqlCor=0;
 const sqlQs = [
   { q:`You have a table <span class="q-code">orders(order_id, customer_id, amount, created_at)</span>.<br><br>Write a query to find customers with more than 3 orders AND total spend over $500, ordered by total spend descending.`, d:'Intermediate' },
@@ -1240,11 +1473,9 @@ function updateSQL() {
   const acc = sqlAtt > 0 ? Math.round(sqlCor/sqlAtt*100) : 0;
   document.getElementById('s-acc').textContent = sqlAtt > 0 ? acc+'%' : '—';
   document.getElementById('s-prog').style.width = acc + '%';
-  const accEl = document.getElementById('s-acc');
-  accEl.className = 'score-num' + (acc >= 70 ? ' good' : acc > 0 ? ' bad' : '');
+  document.getElementById('s-acc').className = 'score-num' + (acc >= 70 ? ' good' : acc > 0 ? ' bad' : '');
 }
 
-// Case
 const caseQs = [
   "Your company's DAU dropped 15% last Tuesday. The CEO needs an explanation by end of day. Walk through your complete analysis framework.",
   "Revenue fell 20% in Q4 despite user numbers growing 10%. How do you investigate this paradox?",
@@ -1264,7 +1495,7 @@ async function evalCase() {
 }
 
 function caseHint() {
-  showIntResult(`📋 DACI Framework for Metric Drops:\n\n1. CLARIFY FIRST\n• Which platform / device / region?\n• New vs returning users?\n• Any recent product changes or deploys?\n\n2. SEGMENT THE DROP\n• New users vs returning\n• By platform, geography, cohort\n• Funnel: fewer sessions or shorter sessions?\n\n3. HYPOTHESES\n• Technical: tracking bug, broken feature\n• Product: A/B test, UI change\n• External: competitor, news, seasonal\n\n4. DATA TO CHECK\n• Error logs + crash reports\n• App store reviews\n• Login / signup funnel\n• Push notification delivery\n\n5. COMMUNICATE\n• Lead with most likely hypothesis\n• State what confirms/denies it\n• Give timeline for full answer`);
+  showIntResult(`📋 DACI Framework for Metric Drops:\n\n1. CLARIFY FIRST\n• Which platform / device / region?\n• New vs returning users?\n• Any recent product changes?\n\n2. SEGMENT THE DROP\n• By platform, geography, cohort\n• Funnel: fewer sessions or shorter?\n\n3. HYPOTHESES\n• Technical: tracking bug, broken feature\n• Product: A/B test, UI change\n• External: competitor, news, seasonal\n\n4. DATA TO CHECK\n• Error logs + crash reports\n• App store reviews\n• Login / signup funnel\n\n5. COMMUNICATE\n• Lead with most likely hypothesis\n• Give timeline for full answer`);
 }
 
 function newCase() {
@@ -1276,13 +1507,11 @@ function newCase() {
   document.getElementById('int-footer').style.display = 'none';
 }
 
-// Behavioral
 const bqMap = {
-  conflict:   "Tell me about a time you disagreed with a stakeholder on how to interpret data or present findings. How did you resolve it?",
+  conflict: "Tell me about a time you disagreed with a stakeholder on how to interpret data or present findings. How did you resolve it?",
   leadership: "Describe a time you took initiative on a data project without being asked. What was the outcome?",
-  failure:    "Tell me about a data analysis you got wrong. How did you discover the mistake and what did you do?",
-  success:    "Walk me through your proudest data project — the problem, your approach, and the business outcome.",
-  stakeholder:"Describe a time you explained complex data findings to a non-technical audience."
+  failure: "Tell me about a data analysis you got wrong. How did you discover the mistake and what did you do?",
+  success: "Walk me through your proudest data project — the problem, your approach, and the business outcome."
 };
 
 function loadBQ(type) {
@@ -1306,7 +1535,6 @@ async function evalBQ() {
   } catch(e) { hideLoad('int'); toast('AI error — try again','err'); }
 }
 
-// Mock Interview
 let mockHistory = [], mockStarted = false;
 
 function resetMockUI() {
@@ -1315,21 +1543,17 @@ function resetMockUI() {
 }
 
 async function startMock() {
-  const co   = document.getElementById('mock-co').value;
+  const co = document.getElementById('mock-co').value;
   const diff = document.getElementById('mock-diff').value;
   mockHistory = []; mockStarted = true;
-
   document.getElementById('mock-chat-wrap').style.display = 'block';
   document.getElementById('int-output-wrap').style.display = 'none';
   document.getElementById('chat-msgs').innerHTML = '';
-  document.getElementById('chat-status').textContent = 'Interview in progress';
-  addChatMsg('sys', '🎙️ Interview started. Type your answers below.');
-
+  document.getElementById('chat-status').textContent = '// Interview in progress';
+  addChatMsg('sys', '🎙️ Interview initialized. Type your answers below.');
   document.getElementById('mock-loader').classList.add('on');
   try {
-    const text = await callAI(
-      `Start a ${diff}-level data analyst mock interview for a ${co}. Introduce yourself briefly as the interviewer, then ask your first question. Mix SQL, analytics thinking, and behavioral questions naturally. Keep it realistic.`
-    );
+    const text = await callAI(`Start a ${diff}-level data analyst mock interview for a ${co}. Introduce yourself briefly as the interviewer, then ask your first question. Mix SQL, analytics thinking, and behavioral questions naturally. Keep it realistic.`);
     document.getElementById('mock-loader').classList.remove('on');
     addChatMsg('ai', text);
     mockHistory.push({ role:'assistant', content:text });
@@ -1376,11 +1600,6 @@ document.addEventListener('keydown', e => {
     e.preventDefault(); sendMock();
   }
 });
-
-// ── PAYMENT ──────────────────────────────
-function scrollToTools() {
-  goTo('tools');
-}
 
 function shareWhatsApp() {
   const msg = encodeURIComponent(`🚀 Bhai ye tool try karo — bilkul FREE hai!\n\nDataPath AI — Data Analyst job ke liye:\n✅ AI Roadmap Generator\n✅ Resume Optimizer\n✅ Mock Interview Coach\n\nAbhi Free Beta chal raha hai 👇\nhttps://ayush123ak.github.io/datapath-ai/`);
